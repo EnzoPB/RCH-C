@@ -1,0 +1,324 @@
+body {
+	font-family: sans-serif;
+	background-color: #222;
+	color: #fff;
+	margin: 5px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.row {
+	display: flex;
+	width: 100%;
+}
+
+.box {
+	margin: 6px;
+	padding: 6px;
+	width: 100%;
+	background-color: #2a2a2a;
+	outline: 1px solid #333;
+}
+
+
+/* Form */
+
+fieldset {
+	border: 1px solid #505050;
+}
+
+fieldset:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+fieldset>legend {
+	color: #fff;
+}
+
+.label {
+	margin-bottom: 2px;
+	display: block;
+}
+
+
+/* / Form */
+
+
+/* Button */
+
+.button {
+	padding: 10px 15px;
+	background-color: #363636;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
+.button:hover {
+	outline: 2px solid #444;
+}
+
+.button:active {
+	background-color: #444;
+}
+
+.button-group {
+	display: flex;
+}
+
+.button-group .button:not(:last-child) {
+	border-right: 1px solid #444;
+}
+
+.button-group .button:hover {
+	z-index: 1;
+	border-color: transparent;
+}
+
+.button-square {
+	padding: 10px;
+}
+
+.button.green {
+	background-color: #27ae60;
+}
+
+.button.green:hover {
+	outline: 2px solid #2ecc71;
+}
+
+.button.green:active {
+	background-color: #2ecc71;
+}
+
+
+/* / Button */
+
+
+/* Badge */
+
+.badge {
+	font-size: 13px;
+	background-color: #363636;
+	border-radius: 2px;
+	padding: 0 5px;
+}
+
+
+/* / Badge */
+
+
+/* Modal */
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal.visible {
+	display: block;
+}
+
+.modal-content {
+	position: relative;
+	background-color: #2a2a2a;
+	border: 1px solid #333;
+	margin: auto;
+	padding: 0;
+	width: 40%;
+}
+
+.modal-header {
+	padding: 10px 15px;
+	font-size: 25px;
+	background-color: #333;
+}
+
+.modal-footer {
+	padding: 10px 15px;
+}
+
+.modal-body {
+	padding: 15px;
+	border-bottom: 1px solid #333;
+}
+
+
+/* / Modal */
+
+#title {
+	width: 15%;
+	text-align: center;
+}
+
+#title #state-container {
+	padding: 10px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#title #state-container #state {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#title #state-container #state.gray {
+	background-color: #363636;
+}
+
+#title #state-container #state.green {
+	background-color: #2ecc71;
+}
+
+#title #state-container #state.blue {
+	background-color: #2980b9;
+}
+
+#title #state-container #state.orange {
+	background-color: #f39c12;
+}
+
+#title #state-container #state.red {
+	background-color: #e74c3c;
+	animation: blink 0.7s infinite step-end;
+}
+
+@keyframes status-blink {
+	0% {
+		background-color: #363636;
+	}
+	50% {
+		background-color: #e74c3c;
+	}
+}
+
+
+/* Status */
+
+#status {
+	width: 100%;
+	table-layout: fixed;
+}
+
+#status td {
+	border: none;
+	text-align: center;
+	background-color: #363636;
+	padding: 5px 0;
+}
+
+#status td.green {
+	background-color: #2ecc71;
+}
+
+#status td.orange {
+	background-color: #f39c12;
+}
+
+#status td.red {
+	background-color: #e74c3c;
+}
+
+#status td.red.blink {
+	animation: status-blink 0.7s infinite step-end;
+}
+
+@keyframes status-blink {
+	0% {
+		background-color: #363636;
+	}
+	50% {
+		background-color: #e74c3c;
+	}
+}
+
+#status td.blank {
+	visibility: hidden;
+}
+
+
+/* / Status */
+
+
+/* Telemetry */
+
+#telemetry {
+	width: 100%
+}
+
+#telemetry .row:not(:last-child) {
+	margin-bottom: 3px;
+}
+
+#telemetry .telemetry-element {
+	width: 25%;
+	display: flex;
+}
+
+#telemetry .telemetry-element .name {
+	width: 35%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#telemetry .telemetry-element .value {
+	padding-left: 3px;
+	width: 40%;
+	position: relative;
+	line-height: 20px;
+}
+
+#telemetry .telemetry-element .gauge {
+	transition: all 0.1s;
+	padding-left: 3px;
+	width: 0%;
+	height: 20px;
+	background: #27ae60;
+	white-space: nowrap;
+}
+
+#telemetry .telemetry-element .text-overflow:hover {
+	display: inline-block;
+	animation: floatText 6s infinite linear;
+}
+
+@keyframes floatText {
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+
+/* / Telemetry */
+
+
+/* Chart */
+
+.chart {
+	height: 150px;
+	width: 100%;
+	margin: 2px;
+}
+
+div.smoothie-chart-tooltip {
+	background: rgba(60, 60, 60, 0.7);
+	padding: 1em;
+	margin-top: 20px;
+	color: white;
+	font-size: 10px;
+	pointer-events: none;
+}
+
+
+/* / Chart */

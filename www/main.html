@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RCH-C</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+	<div id="settings-modal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				Paramètres
+			</div>
+
+			<div class="modal-body">
+				<fieldset>
+					<legend>Graphiques</legend>
+					<span class="label">Temps d'affichage limite des graphiques</span>
+					<div class="button-group" id="settings-chart-time">
+						<button class="button" data-value="10">10 secondes</button>
+						<button class="button" data-value="30">30 secondes</button>
+						<button class="button" data-value="60">1 minute</button>
+						<button class="button" data-value="180">3 minutes</button>
+						<button class="button" data-value="600">10 minutes</button>
+					</div>
+
+					<span class="label" style="margin-top:10px">Activer le delai</span>
+					<div class="button-group" id="settings-chart-delay">
+						<button class="button" data-value="true">oui</button>
+						<button class="button" data-value="false">non</button>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>Données & télémétrie</legend>
+					<span class="label">Espacement entre le rafraichissement des données</span>
+					<div class="button-group" id="settings-data-frequency">
+						<button class="button" data-value="150">150 millisecondes</button>
+						<button class="button" data-value="300">300 millisecondes</button>
+						<button class="button" data-value="1000">1 seconde</button>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="modal-footer">
+				<button class="button close">Fermer</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="box" id="title">
+			<span style="font-size:30px">RCH-C</span>
+			<br>
+			<span>Version B0.1</span>
+			<br>
+			<span>Enzo PB</span>
+			<br>
+			<button class="button" onclick="openModal('#settings-modal')" style="margin-top:10px;width:100%">Paramètres</button>
+			<br>
+			<div id="state-container">
+				Status
+				<br>
+				<span id="state" class="gray">INIT</span>
+			</div>
+		</div>
+
+		<div class="box">
+			<table id="status">
+				<tr>
+					<td id="status-general">Général</td>
+					<td id="status-connection">Connexion</td>
+					<td id="status-motors">Moteurs</td>
+					<td id="status-sensors">Capteurs</td>
+				</tr>
+				<tr>
+					<td class="blank"></td>
+					<td id="status-receiver">Récepteur</td>
+					<td id="status-gasMotor">Moteur thermique</td>
+					<td id="status-speedSensor">Capteur de vitesse</td>
+				</tr>
+				<tr>
+					<td class="blank"></td>
+					<td id="status-backend">Backend</td>
+					<td id="status-elecMotor">Moteur électrique</td>
+					<td id="status-accelerometer">Accéléromètre</td>
+				</tr>
+				<tr>
+					<td class="blank"></td>
+					<td class="blank"></td>
+					<td class="blank"></td>
+					<td id="status-engineSpeedSensor">Capteur de régimes moteurs</td>
+				</tr>
+				<tr>
+					<td class="blank"></td>
+					<td class="blank"></td>
+					<td class="blank"></td>
+					<td id="status-engineTemperatureSensor">Capteur de température moteurs</td>
+				</tr>
+				<tr>
+					<td class="blank"></td>
+					<td class="blank"></td>
+					<td class="blank"></td>
+					<td id="status-temperatureSensor">Thermomètre</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="box">
+			<div id="telemetry">
+				<div class="row">
+					<div class="telemetry-element">
+						<div class="name">Vitesse:</div>
+						<div class="value">
+							<div class="gauge" id="gauge-speed">
+								<span id="telemetry-speed"></span> km/h
+							</div>
+						</div>
+					</div>
+					<div class="telemetry-element">
+						<div class="name">
+							<span class="badge">elec</span> Temp:
+						</div>
+						<div class="value">
+							<div class="gauge" id="gauge-elecEngineTemperature">
+								<span id="telemetry-elecEngineTemperature"></span> °C
+							</div>
+						</div>
+					</div>
+					<div class="telemetry-element">
+						<div class="name">
+							<span class="badge">ther</span> Temp:
+						</div>
+						<div class="value">
+							<div class="gauge" id="gauge-gasEngineTemperature">
+								<span id="telemetry-gasEngineTemperature"></span> °C
+							</div>
+						</div>
+					</div>
+					<div class="telemetry-element">
+						<div class="name">Température:</div>
+						<div class="value">
+							<div class="gauge" id="gauge-temperature">
+								<span id="telemetry-temperature"></span> °C
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="telemetry-element">
+						<div class="name">Accélération:</div>
+						<div class="value">
+							<div class="gauge" id="gauge-acceleration">
+								<span id="telemetry-acceleration"></span> m/s²
+							</div>
+						</div>
+					</div>
+					<div class="telemetry-element">
+						<div class="name">
+							<span class="badge">elec</span> Régime:
+						</div>
+						<div class="value">
+							<div class="gauge" id="gauge-elecEngineSpeed">
+								<span id="telemetry-elecEngineSpeed"></span> tr/min
+							</div>
+						</div>
+					</div>
+					<div class="telemetry-element">
+						<div class="name">
+							<span class="badge">ther</span> Régime:
+						</div>
+						<div class="value">
+							<div class="gauge" id="gauge-gasEngineSpeed">
+								<span id="telemetry-gasEngineSpeed"></span> tr/min
+							</div>
+						</div>
+					</div>
+					<div class="telemetry-element">
+						<div class="name">???</div>
+						<div class="value">000</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="box" style="width:50%">
+			<div class="row">
+				<div style="width:50%">Vitesse (km/h)</div>
+				<div style="width:50%">Accélération (m/s²)</div>
+			</div>
+			<div class="row">
+				<canvas id="chart-speed" class="chart"></canvas>
+				<canvas id="chart-acceleration" class="chart"></canvas>
+			</div>
+
+			<div class="row" style="margin-top:5px">
+				<div style="width:50%">Régimes moteurs (tr/min)</div>
+				<div style="width:50%">Température (°C)</div>
+			</div>
+			<div class="row">
+				<canvas id="chart-engineSpeed" class="chart"></canvas>
+				<canvas id="chart-temperature" class="chart"></canvas>
+			</div>
+		</div>
+		<div class="box" style="width:50%">
+		</div>
+	</div>
+</body>
+<script>
+	if (typeof module == 'object') {
+		window.module = module;
+		module = undefined;
+	}
+</script>
+<script src="js/jquery.min.js"></script>
+<script src="js/smoothie.js"></script>
+<script src="js/main.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/data.js"></script>
+<script>
+	if (window.module) {
+		module = window.module;
+	}
+</script>
+
+</html>
