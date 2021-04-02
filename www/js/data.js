@@ -3,7 +3,7 @@ var warningAudio = new Audio('assets/warning.mp3');
 $(() => {
 	updateTelemetry();
 });
-var a;
+var requestTelemetry;
 var lastTelemetry = { // Initial telemtry, used to compare to the fresh telemetry to avoid updating data if it hasn't changed (everything to -1 at the beginning to make sure it updates the first time)
 	speed: -0,
 	acceleration: -1,
@@ -19,7 +19,7 @@ var lastTelemetry = { // Initial telemtry, used to compare to the fresh telemetr
 };
 
 function updateTelemetry() {
-	a = setInterval(() => {
+	requestTelemetry = setInterval(() => {
 		ipcRenderer.send('getTelemetry');
 		ipcRenderer.on('telemetry', (event, data) => {
 			if (lastTelemetry.state != data.state) {
@@ -97,7 +97,7 @@ function updateTelemetry() {
 
 			lastTelemetry = data;
 		});
-	}, 150);
+	}, settings['data-frequency']);
 }
 
 

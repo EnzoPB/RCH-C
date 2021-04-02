@@ -289,6 +289,10 @@ fieldset>legend {
 	white-space: nowrap;
 }
 
+#telemetry .telemetry-element .gauge.without-transition {
+	transition: none;
+}
+
 #telemetry .telemetry-element .gauge.red {
 	background-color: #e74c3c;
 }
