@@ -7,7 +7,7 @@ const path = require('path');
 const SerialPort = require('serialport');
 const { StringStream } = require('scramjet');
 
-var serialport = new SerialPort('/dev/ttyACM0', {
+var serialport = new SerialPort('/dev/ttyUSB0', {
 	baudRate: 9600,
 	parser: new SerialPort.parsers.Readline("\r\n")
 });
@@ -15,7 +15,9 @@ var serialport = new SerialPort('/dev/ttyACM0', {
 serialport.on('open', () => {
 	serialport.pipe(new StringStream)
 		.lines('\r\n') // read data until a new line
-		.each(data => { processSerial(data) }); // process the data
+		.each(data => {
+			processSerial(data)
+		}); // process the data
 });
 
 var mainWindow;
@@ -37,8 +39,8 @@ function createMainWindow() {
 	mainWindow.loadFile(path.join(__dirname, 'www', 'main.html')); // load the html document
 }
 
-function randomTelemetry() {
-	return Math.round(Math.random() * 100);
+function randomTelemetry(min = 0, max = 100) {
+	return Math.floor(Math.random() * max) + min;
 }
 
 var lastTelemetry = { // Object that fills up with the data we receive from the transmitter
@@ -52,7 +54,7 @@ var lastTelemetry = { // Object that fills up with the data we receive from the 
 	controlThrottle: 0,
 	controlGasThrottle: 0,
 	controlElecThrottle: 0,
-	controlStreering: 0
+	controlSteering: 0
 };
 var lastErrors = []; // This object fills up when there's errors (from the transmitter itself, or from the app)
 
@@ -63,7 +65,7 @@ function processSerial(data) {
 	 * "datatype:data"
 	 * 
 	 * Telemetry data:
-	 * "data:telemetry:state,speed,accelerationX,accelerationY,accelerationZ,temperature"
+	 * "data:telemetry:state,accelerationX,accelerationY,temperature"
 	 * 
 	 * Error:
 	 * "error:severity(0-3):faultyelement:message"
@@ -76,20 +78,20 @@ function processSerial(data) {
 			if (data[0] == 'telemetry') { // in case we receive telemetry data
 				data.shift(); // the first element is "telemetry", we can remove it
 				data = data[0].split(','); // we split the different telemetry elements
-				checkTelemetry(data); // we check the telemetry for any abnormal value
+				//checkTelemetry(data); // we check the telemetry for any abnormal value
 				lastTelemetry = { // we update the lastTelemetry object, which will be transferred to the UI
-					state: data[0],
-					speed: data[1],
-					acceleration: data[2] + data[3] + data[4],
-					temperature: data[5],
+					state: parseInt(data[0]),
+					speed: randomTelemetry(),
+					acceleration: parseFloat(data[1] + data[2]).toFixed(2),
+					temperature: parseInt(data[3]),
 					gasEngineSpeed: randomTelemetry(),
-					gasEngineTemperature: randomTelemetry(),
+					gasEngineTemperature: randomTelemetry(24, 45),
 					elecEngineSpeed: randomTelemetry(),
-					elecEngineTemperature: randomTelemetry(),
+					elecEngineTemperature: randomTelemetry(24, 45),
 					controlThrottle: randomTelemetry(),
 					controlGasThrottle: randomTelemetry(),
 					controlElecThrottle: randomTelemetry(),
-					controlStreering: randomTelemetry()
+					controlSteering: randomTelemetry()
 				};
 
 			}
@@ -98,7 +100,7 @@ function processSerial(data) {
 
 		case 'error': // in case we receive an error
 			data.shift(); // the first element is "error", we can remove it
-			lastErrors.append({ // we append the error to the lastErrors object, which will be transferred to the UI
+			lastErrors.push({ // we append the error to the lastErrors object, which will be transferred to the UI
 				severity: data[0],
 				element: data[1],
 				message: data[2]
@@ -106,9 +108,9 @@ function processSerial(data) {
 			break;
 
 		default: // most likely the data is corrupted
-			lastErrors.append({
+			lastErrors.push({ // we append the error to the lastErrors object, which will be transferred to the UI
 				severity: 3,
-				element: backend,
+				element: 'backend',
 				message: 'incorrect data received'
 			});
 			break;
