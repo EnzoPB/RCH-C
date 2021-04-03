@@ -1,4 +1,5 @@
 var settings = {
+	'ui-optimize': true,
 	'chart-time': 30, // how much the chart go back in the time
 	'chart-delay': true, // add a delay to the charts to make it looks smoother (also controls the gauges "smoothness")
 	'data-frequency': 150 // this is actually not the frequency, but rather the time (in ms) between 2 telemetry request
@@ -20,6 +21,10 @@ $('#settings-chart-time button').on('click', event => { // when the chart-time s
 	for (let chart in charts) { // apply this setting to every charts
 		charts[chart].options.millisPerPixel = ((settings['chart-time'] - 1) * 1000) / $($('.chart')[0]).width(); // change the millisPerPixel which is basically the chart's scale
 		charts[chart].options.grid.millisPerLine = settings['chart-time'] * 100 // change the millis per line, which is the background grid scale
+
+		if (settings['chart-time'] == 180) { // if the chart need to go back 3 min, the line has to be 1px otherwise it'll become unreadable
+			charts.acceleration.getTimeSeriesOptions(chartsData.acceleration).lineWidth = 1;
+		}
 	};
 });
 
