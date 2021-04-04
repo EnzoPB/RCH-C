@@ -41,8 +41,14 @@ $(() => {
 	charts.speed.addTimeSeries(chartsData.speed, timeSeriesOpts);
 	charts.acceleration.addTimeSeries(chartsData.acceleration, timeSeriesOpts);
 
-	charts.engineSpeed.addTimeSeries(chartsData.elecEngineSpeed, timeSeriesOpts);
-	charts.engineSpeed.addTimeSeries(chartsData.gasEngineSpeed, timeSeriesOpts);
+	charts.engineSpeed.addTimeSeries(chartsData.elecEngineSpeed, {
+		lineWidth: 2,
+		strokeStyle: '#3498db'
+	});
+	charts.engineSpeed.addTimeSeries(chartsData.gasEngineSpeed, {
+		lineWidth: 2,
+		strokeStyle: '#e67e22'
+	});
 
 	charts.temperature.addTimeSeries(chartsData.temperature, {
 		lineWidth: 2

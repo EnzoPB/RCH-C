@@ -69,6 +69,10 @@ fieldset>legend {
 	display: flex;
 }
 
+.button-group .button {
+	width: 100%;
+}
+
 .button-group .button:not(:last-child) {
 	border-right: 1px solid #444;
 }
@@ -191,7 +195,7 @@ fieldset>legend {
 
 #title #state-container.red {
 	background-color: #e74c3c;
-	animation: blink 0.7s infinite step-end;
+	animation: status-blink 1.5s infinite step-end;
 }
 
 @keyframes status-blink {
