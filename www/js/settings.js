@@ -50,9 +50,9 @@ $('#settings-chart-time button').on('click', event => { // when the chart-time s
 
 		for (let timeSeries in chartsData) { // if the chart need to go back 3 min, the line has to be 1px otherwise it'll become unreadable
 			if (typeof charts[chart].getTimeSeriesOptions(timeSeries) != 'undefined') { // apply this only to the chart's timeSeries
-				if (settings['chart-time'] == 180) { // if the setting is 3min, reduce to line width to 1px
+				if (settings['chart-time'] == 60) { // if the setting is 1min, reduce to line width to 1px
 					charts[chart].getTimeSeriesOptions(timeSeries).lineWidth = 1;
-				} else { // if the setting is other than 3min, set the line width back to 2px
+				} else { // if the setting is less than 1min, set the line width back to 2px
 					charts[chart].getTimeSeriesOptions(timeSeries).lineWidth = 2;
 				}
 			}
