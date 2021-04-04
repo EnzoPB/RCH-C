@@ -200,10 +200,10 @@ fieldset>legend {
 
 @keyframes status-blink {
 	0% {
-		background-color: #363636;
+		background-color: #e74c3c;
 	}
 	50% {
-		background-color: #e74c3c;
+		background-color: #363636;
 	}
 }
 
