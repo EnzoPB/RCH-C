@@ -95,6 +95,9 @@ function updateTelemetry() {
 			}
 			setChart('gasEngineSpeed', data.gasEngineSpeed);
 
+			setChart('controlGasThrottle', data.controlGasThrottle);
+			setChart('controlElecThrottle', data.controlElecThrottle);
+
 			lastTelemetry = data;
 		});
 	}, settings['data-frequency']);
@@ -104,11 +107,11 @@ function updateTelemetry() {
 // Functions for the frontend, using vanilla js because we are calling those function several times per second, so they need to be quick (using jQuery would be too slow, and kinda useless)
 
 function setGauge(gauge, value) { // Change the gauge value
-	document.getElementById(`gauge-${gauge}`).style.width = `${Math.round(value)}%`;
+	document.getElementById(`gauge-${gauge}`).style.width = `${Math.round(Math.abs(value))}%`; // absolute value because the gauge cannot go to the left
 }
 
 function setTelemetry(telemetry, value) { // Change the raw telemetry value
-	document.getElementById(`telemetry-${telemetry}`).textContent = Math.abs(value); // absolute value because the gauge cannot go to the left
+	document.getElementById(`telemetry-${telemetry}`).textContent = value;
 }
 
 function setChart(dataName, value) {

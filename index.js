@@ -89,9 +89,9 @@ function processSerial(data) {
 					elecEngineSpeed: randomTelemetry(),
 					elecEngineTemperature: randomTelemetry(24, 45),
 					controlThrottle: randomTelemetry(),
-					controlGasThrottle: randomTelemetry(),
-					controlElecThrottle: randomTelemetry(),
-					controlSteering: randomTelemetry()
+					controlGasThrottle: 50,
+					controlElecThrottle: 70,
+					controlSteering: 10
 				};
 
 			}

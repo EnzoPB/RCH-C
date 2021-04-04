@@ -29,6 +29,8 @@ $(() => {
 	chartsData.acceleration = new TimeSeries();
 	chartsData.elecEngineSpeed = new TimeSeries();
 	chartsData.gasEngineSpeed = new TimeSeries();
+	chartsData.controlElecThrottle = new TimeSeries();
+	chartsData.controlGasThrottle = new TimeSeries();
 	chartsData.elecEngineTemperature = new TimeSeries();
 	chartsData.gasEngineTemperature = new TimeSeries();
 	chartsData.temperature = new TimeSeries();
@@ -49,6 +51,16 @@ $(() => {
 		lineWidth: 2,
 		strokeStyle: '#e67e22'
 	});
+
+	charts.engineSpeed.addTimeSeries(chartsData.controlElecThrottle, {
+		lineWidth: 2,
+		strokeStyle: 'rgba(52, 152, 219, 0.5)'
+	});
+	charts.engineSpeed.addTimeSeries(chartsData.controlGasThrottle, {
+		lineWidth: 2,
+		strokeStyle: 'rgba(230, 126, 34, 0.5)'
+	});
+
 
 	charts.temperature.addTimeSeries(chartsData.temperature, {
 		lineWidth: 2
