@@ -9,14 +9,14 @@ const { StringStream } = require('scramjet');
 
 var serialport = new SerialPort('/dev/ttyUSB0', {
 	baudRate: 9600,
-	parser: new SerialPort.parsers.Readline("\r\n")
+	parser: new SerialPort.parsers.Readline('\r\n')
 });
 
 serialport.on('open', () => {
 	serialport.pipe(new StringStream)
 		.lines('\r\n') // read data until a new line
 		.each(data => {
-			processSerial(data)
+			processSerial(data);
 		}); // process the data
 });
 
