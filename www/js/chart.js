@@ -56,3 +56,15 @@ $(() => {
 		strokeStyle: '#e67e22'
 	});
 });
+
+setInterval(() => { // smoothie charts doesn't automatically clean up the chart's data array, so we have to do it periodically otherwise it will create very heavy array and will eventually make the app lag
+	for (timeSeries in chartsData) { // do this for every timeSeries
+		var removeCount = 0; // number of datapoints to remove
+		while (chartsData[timeSeries].data[removeCount + 1][0] < new Date().getTime() - 60000) { // increase removeCount for every datapoints older than 60sec
+			removeCount++;
+		}
+		if (removeCount !== 0) {
+			chartsData[timeSeries].data.splice(0, removeCount); // remove all the selected datapoints
+		}
+	}
+}, 1000);
