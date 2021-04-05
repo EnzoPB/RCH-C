@@ -18,12 +18,16 @@ $(() => {
 	charts.engineSpeed = new SmoothieChart(chartOpts);
 	charts.temperature = new SmoothieChart(chartOpts);
 
+	charts.acceleration.options.minValue = -10;
+	charts.acceleration.options.maxValue = 10;
+	charts.temperature.options.maxValue = 50;
+
 	charts.speed.streamTo($('#chart-speed')[0], settings['data-frequency']);
 	charts.acceleration.streamTo($('#chart-acceleration')[0], settings['data-frequency']);
 	charts.engineSpeed.streamTo($('#chart-engineSpeed')[0], settings['data-frequency']);
 	charts.temperature.streamTo($('#chart-temperature')[0], settings['data-frequency']);
 
-	charts.temperature.options.maxValue = 50;
+
 
 	chartsData.speed = new TimeSeries();
 	chartsData.acceleration = new TimeSeries();

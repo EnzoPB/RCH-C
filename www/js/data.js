@@ -22,6 +22,7 @@ function updateTelemetry() {
 	requestTelemetry = setInterval(() => {
 		ipcRenderer.send('getTelemetry');
 		ipcRenderer.on('telemetry', (event, data) => {
+			checkTelemetry(data); // Check the telemetry data for any errors
 			if (lastTelemetry.state != data.state) {
 				switch (data.state) { // 0=initializing 1=ready 2=running 3=halted 4=fatal
 					case 0:
@@ -95,7 +96,16 @@ function updateTelemetry() {
 			}
 			setChart('gasEngineSpeed', data.gasEngineSpeed);
 
+			if (lastTelemetry.controlGasThrottle != data.controlGasThrottle) {
+				setGauge('controlGasThrottle', data.controlGasThrottle);
+				setTelemetry('controlGasThrottle', data.controlGasThrottle)
+			}
 			setChart('controlGasThrottle', data.controlGasThrottle);
+
+			if (lastTelemetry.controlElecThrottle != data.controlElecThrottle) {
+				setGauge('controlElecThrottle', data.controlElecThrottle);
+				setTelemetry('controlElecThrottle', data.controlElecThrottle)
+			}
 			setChart('controlElecThrottle', data.controlElecThrottle);
 
 			lastTelemetry = data;
@@ -103,6 +113,7 @@ function updateTelemetry() {
 	}, settings['data-frequency']);
 }
 
+function checkTelemetry(data) {}
 
 // Functions for the frontend, using vanilla js because we are calling those function several times per second, so they need to be quick (using jQuery would be too slow, and kinda useless)
 
