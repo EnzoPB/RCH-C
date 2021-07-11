@@ -222,15 +222,15 @@ fieldset>legend {
 	padding: 5px 0;
 }
 
-#status td.green {
+#status td.normal {
 	background-color: #2ecc71;
 }
 
-#status td.orange {
+#status td.error {
 	background-color: #f39c12;
 }
 
-#status td.red {
+#status td.fatal {
 	background-color: #e74c3c;
 }
 

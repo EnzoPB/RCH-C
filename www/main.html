@@ -81,38 +81,38 @@
 				<tr>
 					<td id="status-general">Général</td>
 					<td id="status-connection">Connexion</td>
-					<td id="status-motors">Moteurs</td>
-					<td id="status-sensors">Capteurs</td>
+					<td id="status-motors" class="dataIndex-gasEngineSpeed dataIndex-gasEngineTemperature dataIndex-elecEngineSpeed dataIndex-elecEngineTemperature">Moteurs</td>
+					<td id="status-sensors" class="dataIndex-speed dataIndex-acceleration dataIndex-gasEngineSpeed dataIndex-gasEngineTemperature dataIndex-elecEngineSpeed dataIndex-elecEngineTemperature">Capteurs</td>
 				</tr>
 				<tr>
 					<td class="blank"></td>
 					<td id="status-receiver">Récepteur</td>
-					<td id="status-gasMotor">Moteur thermique</td>
-					<td id="status-speedSensor">Capteur de vitesse</td>
+					<td id="status-gasMotor" class="dataIndex-gasEngineSpeed dataIndex-gasEngineTemperature">Moteur thermique</td>
+					<td id="status-speedSensor" class="dataIndex-speed dataIndex-acceleration">Capteur de vitesse</td>
 				</tr>
 				<tr>
 					<td class="blank"></td>
 					<td id="status-backend">Backend</td>
-					<td id="status-elecMotor">Moteur électrique</td>
-					<td id="status-accelerometer">Accéléromètre</td>
+					<td id="status-elecMotor" class="dataIndex-elecEngineSpeed dataIndex-elecEngineTemperature">Moteur électrique</td>
+					<td id="status-accelerometer" class="dataIndex-acceleration">Accéléromètre</td>
 				</tr>
 				<tr>
 					<td class="blank"></td>
 					<td class="blank"></td>
 					<td class="blank"></td>
-					<td id="status-engineSpeedSensor">Capteur de régimes moteurs</td>
+					<td id="status-engineSpeedSensor" class="dataIndex-gasEngineSpeed dataIndex-elecEngineSpeed">Capteur de régimes moteurs</td>
 				</tr>
 				<tr>
 					<td class="blank"></td>
 					<td class="blank"></td>
 					<td class="blank"></td>
-					<td id="status-engineTemperatureSensor">Capteur de température moteurs</td>
+					<td id="status-engineTemperatureSensor" class="dataIndex-gasEngineTemperature dataIndex-elecEngineTemperature">Capteur de température moteurs</td>
 				</tr>
 				<tr>
 					<td class="blank"></td>
 					<td class="blank"></td>
 					<td class="blank"></td>
-					<td id="status-temperatureSensor">Thermomètre</td>
+					<td id="status-temperatureSensor" class="dataIndex-temperature dataIndex-gasEngineTemperature dataIndex-elecEngineTemperature">Thermomètre</td>
 				</tr>
 			</table>
 		</div>
@@ -251,6 +251,12 @@
 			</div>
 		</div>
 		<div class="box" style="width:50%">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="box">
+			<pre id="console"></pre>
 		</div>
 	</div>
 </body>

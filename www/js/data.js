@@ -43,7 +43,7 @@ function updateTelemetry() {
 					case 3:
 						$('#state').text('HALTED');
 						$('#state-container').removeClass();
-						$('#state-container').addClass('orange');
+						$('#state-container').addClass('error');
 						break;
 					case 4:
 						$('#state').text('FATAL');
@@ -113,8 +113,81 @@ function updateTelemetry() {
 	}, settings['data-frequency']);
 }
 
-function checkTelemetry(data) {}
+function checkTelemetry(data) {
+	if (data.speed < 0 || data.speed > 70) {
+		setError('speed', 'error');
+	} else {
+		setError('speed', 'normal');
+	}
 
+	if (data.acceleration < -35 || data.acceleration > 35) {
+		setError('acceleration', 'error');
+	} else {
+		setError('acceleration', 'normal');
+	}
+
+	if (data.temperature < 5 || data.temperature > 100) {
+		setError('temperature', 'error');
+	} else {
+		setError('temperature', 'normal');
+	}
+
+	if (data.gasEngineSpeed < 0 || data.gasEngineSpeed > 2000) {
+		setError('gasEngineSpeed', 'error');
+	} else {
+		setError('gasEngineSpeed', 'normal');
+	}
+
+	if (data.gasEngineTemperature < 5 || data.gasEngineTemperature > 90) {
+		setError('gasEngineTemperature', 'error');
+	} else {
+		setError('gasEngineTemperature', 'normal');
+	}
+
+	if (data.elecEngineSpeed < 0 || data.elecEngineSpeed > 2000) {
+		setError('elecEngineSpeed', 'error');
+	} else {
+		setError('elecEngineSpeed', 'normal');
+	}
+
+	if (data.elecEngineTemperature < 5 || data.elecEngineTemperature > 90) {
+		setError('elecEngineTemperature', 'error');
+	} else {
+		setError('elecEngineTemperature', 'normal');
+	}
+
+	if (data.controlThrottle < 0 || data.controlThrottle > 100) {
+		setError('controlThrottle', 'error');
+	} else {
+		setError('controlThrottle', 'normal');
+	}
+
+	if (data.controlGasThrottle < 0 || data.controlGasThrottle > 100) {
+		setError('controlGasThrottle', 'error');
+	} else {
+		setError('controlGasThrottle', 'normal');
+	}
+
+	if (data.controlElecThrottle < 0 || data.controlElecThrottle > 100) {
+		setError('controlElecThrottle', 'error');
+	} else {
+		setError('controlElecThrottle', 'normal');
+	}
+
+	if (data.controlSteering < -100 || data.controlSteering > 100) {
+		setError('controlSteering', 'error');
+	} else {
+		setError('controlSteering', 'normal');
+	}
+}
+
+function setError(dataIndex, severity) {
+	let element = $(`.dataIndex-${dataIndex}`);
+	if (!element.hasClass(severity)) {
+		element.removeClass();
+		element.addClass(severity);
+	}
+}
 // Functions for the frontend, using vanilla js because we are calling those function several times per second, so they need to be quick (using jQuery would be too slow, and kinda useless)
 
 function setGauge(gauge, value) { // Change the gauge value
