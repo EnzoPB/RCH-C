@@ -78,7 +78,6 @@ function processSerial(data) {
 			if (data[0] == 'telemetry') { // in case we receive telemetry data
 				data.shift(); // the first element is "telemetry", we can remove it
 				data = data[0].split(','); // we split the different telemetry elements
-				//checkTelemetry(data); // we check the telemetry for any abnormal value
 				lastTelemetry = { // we update the lastTelemetry object, which will be transferred to the UI
 					state: parseInt(data[0]),
 					speed: randomTelemetry(),
@@ -118,7 +117,20 @@ function processSerial(data) {
 }
 
 ipcMain.on('getTelemetry', event => { // the UI asks for the telemetry
-	event.reply('telemetry', lastTelemetry); // we answer with the telemetry
+	/*event.reply('telemetry', lastTelemetry); // we answer with the telemetry*/
+	event.reply('telemetry', {
+		speed: randomTelemetry(0, 56),
+		acceleration: randomTelemetry(0, 5),
+		temperature: randomTelemetry(10, 50),
+		gasEngineSpeed: randomTelemetry(0, 2000),
+		gasEngineTemperature: randomTelemetry(15, 65),
+		elecEngineSpeed: randomTelemetry(0, 2000),
+		elecEngineTemperature: randomTelemetry(15, 65),
+		controlThrottle: randomTelemetry(),
+		controlGasThrottle: randomTelemetry(),
+		controlElecThrottle: randomTelemetry(),
+		controlSteering: randomTelemetry(0, 100)
+	})
 });
 
 ipcMain.on('getErrors', event => { // the UI asks for the errors
