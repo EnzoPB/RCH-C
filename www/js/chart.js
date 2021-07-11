@@ -10,7 +10,9 @@ $(() => {
 			sharpLines: true,
 			millisPerLine: settings['chart-time'] * 100
 		},
-		minValue: 0
+		minValue: 0,
+		limitFPS: 25,
+		nonRealtimeData: true
 	};
 
 	charts.speed = new SmoothieChart(chartOpts);
