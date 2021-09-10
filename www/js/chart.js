@@ -92,3 +92,7 @@ setInterval(() => { // smoothie charts doesn't automatically clean up the chart'
 		}
 	}
 }, 1000);
+
+$(window).on('resize', () => { // smoothie charts struggles when the window is resized, when it is expanding, everything is ok, when when the window shrinks, the charts doesn't resize
+	$('.chart').attr('width', ''); // so we remove the width attribute to tell smoothie charts to recalculate the width
+});
