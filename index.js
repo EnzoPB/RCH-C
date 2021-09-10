@@ -45,7 +45,6 @@ function randomTelemetry(min = 0, max = 100) {
 
 var lastTelemetry = { // Object that fills up with the data we receive from the transmitter
 	speed: 0,
-	acceleration: 0,
 	accelerationX: 0,
 	accelerationY: 0,
 	temperature: 0,
@@ -83,10 +82,9 @@ function processSerial(data) {
 				lastTelemetry = { // we update the lastTelemetry object, which will be transferred to the UI
 					state: parseInt(data[0]),
 					speed: randomTelemetry(),
-					acceleration: parseFloat(data[1] + data[2]).toFixed(2),
 					temperature: parseInt(data[3]),
-					accelerationX: randomTelemetry(0, 5),
-					accelerationY: randomTelemetry(0, 5),
+					accelerationX: parseFloat(data[1]).toFixed(2),
+					accelerationY: parseFloat(data[2]).toFixed(2),
 					gasEngineSpeed: randomTelemetry(),
 					gasEngineTemperature: randomTelemetry(24, 45),
 					elecEngineSpeed: randomTelemetry(),
@@ -123,10 +121,10 @@ function processSerial(data) {
 ipcMain.on('getTelemetry', event => { // the UI asks for the telemetry
 	/*event.reply('telemetry', lastTelemetry); // we answer with the telemetry*/
 	event.reply('telemetry', {
+		state: 2,
 		speed: randomTelemetry(0, 56),
-		acceleration: randomTelemetry(0, 5),
-		accelerationX: randomTelemetry(0, 5),
-		accelerationY: randomTelemetry(0, 5),
+		accelerationX: randomTelemetry(-5, 10),
+		accelerationY: randomTelemetry(-5, 10),
 		temperature: randomTelemetry(10, 50),
 		gasEngineSpeed: randomTelemetry(0, 2000),
 		gasEngineTemperature: randomTelemetry(15, 65),

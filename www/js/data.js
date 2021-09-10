@@ -5,8 +5,9 @@ $(() => {
 });
 var requestTelemetry;
 var lastTelemetry = { // Initial telemtry, used to compare to the fresh telemetry to avoid updating data if it hasn't changed (everything to -1 at the beginning to make sure it updates the first time)
-	speed: -0,
-	acceleration: -1,
+	speed: -1,
+	accelerationX: -1,
+	accelerationY: -1,
 	temperature: -1,
 	gasEngineSpeed: -1,
 	gasEngineTemperature: -1,
@@ -59,11 +60,12 @@ function updateTelemetry() {
 			}
 			setChart('speed', data.speed);
 
-			if (lastTelemetry.acceleration != data.acceleration) {
-				setGauge('acceleration', data.acceleration * 5);
-				setTelemetry('acceleration', data.acceleration);
+			var acceleration = data.accelerationX + data.accelerationY;
+			if (lastTelemetry.acceleration != acceleration) {
+				setGauge('acceleration', acceleration * 5);
+				setTelemetry('acceleration', acceleration);
 			}
-			setChart('acceleration', data.acceleration);
+			setChart('acceleration', acceleration);
 
 			if (lastTelemetry.temperature != data.temperature) {
 				setGauge('temperature', data.temperature);
