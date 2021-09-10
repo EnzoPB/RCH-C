@@ -67,6 +67,8 @@ function updateTelemetry() {
 			}
 			setChart('acceleration', acceleration);
 
+			setAccelerationGraph(data.accelerationX, data.accelerationY);
+
 			if (lastTelemetry.temperature != data.temperature) {
 				setGauge('temperature', data.temperature);
 				setTelemetry('temperature', data.temperature);
@@ -130,3 +132,67 @@ function setTelemetry(telemetry, value) { // Change the raw telemetry value
 function setChart(dataName, value) {
 	chartsData[dataName].append(new Date().getTime(), value);
 }
+
+function setAccelerationGraph(valueX, valueY) {
+	px = valueX * 20 + 200;
+	py = valueY * 20 + 200;
+	accelerationGraphRedraw();
+}
+
+
+var px;
+var py;
+var accelerationGraphRedraw;
+var accelerationGraph = p => {
+	let mx;
+	let my;
+	let s = 0.9;
+	let bg;
+
+	p.setup = () => {
+		p.createCanvas(400, 400);
+		p.noLoop();
+		mx = p.width*0.5;
+		my = p.height*0.5;
+		px = mx;
+		py = my;
+
+		bg = p.loadImage('img/accelerationGraphBackground.png');
+		p.fill(255);
+		p.stroke(255);
+
+	}
+
+	accelerationGraphRedraw = () => {
+		p.redraw();
+	}
+	
+	p.draw = () => {
+		//p.background(42);
+		p.clear();
+		p.background(bg);
+	
+		p.scale(s);
+		p.translate((p.height-p.height * s) / 2, (p.width-p.width * s) / 2);
+		/*p.fill(0, 0, 0, 0);
+		p.stroke(180);
+		p.ellipse(mx, my, p.height*0.2, p.width*0.2);
+		p.ellipse(mx, my, p.height*0.4, p.width*0.4);
+		p.ellipse(mx, my, p.height*0.6, p.width*0.6);
+		p.ellipse(mx, my, p.height*0.8, p.width*0.8);
+		p.ellipse(mx, my, p.height, p.width);
+		p.fill(255);
+		p.ellipse(mx, my, 5, 5);
+		p.textAlign(p.CENTER, p.BOTTOM);
+		p.text('0G', mx, my);
+		p.text('0.5G', mx, my-p.height*0.1);
+		p.text('1G', mx, my-p.height*0.2);
+		p.text('1.5G', mx, my-p.height*0.3);
+		p.text('2G', mx, my-p.height*0.4);
+		p.text('2.5G', mx, my-p.height*0.5);*/
+	
+		p.line(mx, my, px, py);
+		p.ellipse(px, py, 10, 10);
+	}
+}
+new p5(accelerationGraph, 'accelerationGraph');

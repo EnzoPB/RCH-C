@@ -335,3 +335,13 @@ div.smoothie-chart-tooltip {
 
 
 /* / Chart */
+
+
+/* Other graphs */
+
+#accelerationGraph canvas {
+	width: 100%!important;
+	height: auto!important;
+}
+
+/* / Other graphs */
