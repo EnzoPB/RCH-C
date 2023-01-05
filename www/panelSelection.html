@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RCH-C</title>
+	<link rel="stylesheet" href="css/main.css">
+	<style>
+		#panels {
+			display: flex
+		}
+
+		#panels > a {
+			color: #fff;
+			padding: 10px 20px;
+			margin: 0 5px;
+			border: 1px solid #444;
+		}
+		#panels > a:first-child {
+			margin-left: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="row">
+		<div class="box">
+			<div class="title">Panels</div>
+			<div id="panels">
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+	if (typeof module == 'object') {
+		window.module = module;
+		module = undefined;
+	}
+</script>
+<script src="js/jquery.min.js"></script>
+<script>
+const {
+	ipcRenderer,
+	remote
+} = require('electron');
+
+$(() => {
+	ipcRenderer.send('getPanels');
+	ipcRenderer.on('panels', (event, panels) => {
+		panels.forEach(panel => {
+			var panelName = panel.replace('.html', '');
+			var panelElement = $(`<a href="panels/${panel}">${panelName}</a>`);
+			$('#panels').append(panelElement);
+		});
+	});
+});
+</script>
+<script>
+	if (window.module) {
+		module = window.module;
+	}
+</script>
+
+</html>

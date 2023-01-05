@@ -1,16 +1,20 @@
 const {
 	app,
 	BrowserWindow,
-	ipcMain
+	ipcMain,
+	dialog
 } = require('electron');
 const path = require('path');
-const SerialPort = require('serialport');
+const fs = require('fs');
 const { StringStream } = require('scramjet');
 
 var serialport = new SerialPort('/dev/ttyUSB0', {
 	baudRate: 9600,
 	parser: new SerialPort.parsers.Readline('\r\n')
 });
+
+
+serialport.on('error', errorHandling)
 
 serialport.on('open', () => {
 	serialport.pipe(new StringStream)
@@ -36,11 +40,15 @@ function createMainWindow() {
 		}
 	});
 	mainWindow.setMenuBarVisibility(false); // hide the menu bar
-	mainWindow.loadFile(path.join(__dirname, 'www', 'main.html')); // load the html document
-}
+	mainWindow.loadFile(path.join(__dirname, 'www', 'panelSelection.html')); // load the panel selection page
 
-function randomTelemetry(min = 0, max = 100) {
-	return Math.floor(Math.random() * max) + min;
+	ipcMain.on('getPanels', event => { // the UI asks for the panels list
+		fs.readdir(path.join(__dirname, 'www', 'panels'), (err, files) => {
+			if (err) errorHandling(err);
+			event.reply('panels', files);
+		});
+		
+	});
 }
 
 var lastTelemetry = { // Object that fills up with the data we receive from the transmitter
@@ -144,3 +152,8 @@ ipcMain.on('getErrors', event => { // the UI asks for the errors
 app.whenReady().then(() => {
 	createMainWindow(); // Create the main window
 });
+
+function errorHandling(errorMessage) {
+	dialog.showErrorBox('Error', errorMessage.message);
+	console.error(errorMessage)
+}
